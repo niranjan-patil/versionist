@@ -37,7 +37,7 @@ A backwards incompatible change was made to the format of the configuration hash
 Prior to 1.0, `api_version` expected hashes with the following structure:
 
 ```ruby
-api_version(:module => "V1", :header => "Accept", :value => "application/vnd.mycompany.com; version=1") do
+api_version(module: "V1", header: "Accept", value: "application/vnd.mycompany.com; version=1") do
   ...
 end
 ```
@@ -46,15 +46,15 @@ In order to support multiple concurrent versioning strategies per api version, `
 keys point to hashes and contain the required keys.
 
 ```ruby
-api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.mycompany.com; version=1"}) do
+api_version(module: "V1", header: { name: "Accept", value: "application/vnd.mycompany.com; version=1"}) do
   ...
 end
 
-api_version(:module => "V1", :parameter => {:name => "version", :value => "1"}) do
+api_version(module: "V1", parameter: { name: "version", :value => "1"}) do
   ...
 end
 
-api_version(:module => "V1", :path => {:value => "v1"}) do
+api_version(module: "V1", path: { value: "v1"}) do
   ...
 end
 ```
@@ -78,7 +78,7 @@ Examples:
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.mycompany.com; version=1"}) do
+  api_version(module "V1", header: { name: "Accept", value: "application/vnd.mycompany.com; version=1"}) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -98,7 +98,7 @@ Rails' format resolution logic. This is the only case where Versionist will alte
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V20120317", :header => {:name => "Api-Version", :value => "v20120317"}) do
+  api_version(module: "V20120317", header: { name: "Api-Version", value: "v20120317"}) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -118,7 +118,7 @@ Example:
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V3", :path => {:value => "v3"}) do
+  api_version(module: "V3", path: {value: "v3"}) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -138,7 +138,7 @@ Example:
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V2", :parameter => {:name => "version", :value => "v2"}) do
+  api_version(module: "V2", parameter: { name: "version", value: "v2"}) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -156,7 +156,7 @@ Example.
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V20120317", :header => {:name => "Api-Version", :value => "v20120317"}, :default => true) do
+  api_version(module: "V20120317", header: {:name => "Api-Version", :value => "v20120317"}, :default => true) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -179,7 +179,7 @@ Example.
 
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V20120317", :header => {:name => "Api-Version", :value => "v20120317"}, :defaults => {:format => :json}, :default => true) do
+  api_version(module: "V20120317", header: { name: "Api-Version", value: "v20120317"}, defaults: { format: json }, default: true) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
@@ -194,7 +194,7 @@ An API version may optionally support multiple concurrent versioning strategies.
 Example.
 ```ruby
 MyApi::Application.routes.draw do
-  api_version(:module => "V1", :header => {:name => "Accept", :value => "application/vnd.mycompany.com; version=1"}, :path => {:value => "v1"}) do
+  api_version(module: "V1", header: { name: "Accept", value: "application/vnd.mycompany.com; version=1"}, path: { value: "v1" }) do
     match '/foos.(:format)' => 'foos#index', :via => :get
     match '/foos_no_format' => 'foos#index', :via => :get
     resources :bars
